@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nestra • GPS Housing Platform v2.0</title>
+  <title>Nestra • GPS Housing Platform v3.0</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    :root { --primary: #FF6B00; }
+    :root { 
+      --primary: #FF6B00;
+      --secondary: #00D4FF;
+      --accent: #00FF88;
+      --dark: #1a3c5e;
+      --light: #e8f4f8;
+    }
     * { box-sizing: border-box; }
     body { margin:0; font-family:'Segoe UI',sans-serif; background:#f0f0f0; }
     
     .phone { max-width:380px; margin:20px auto; background:white; border:14px solid #111; border-radius:42px; overflow:hidden; height:680px; display:flex; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.4); }
-    .topbar { background:var(--primary); color:white; padding:12px; text-align:center; font-weight:bold; z-index:10; position:relative; }
+    .topbar { background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%); color:white; padding:12px; text-align:center; font-weight:bold; z-index:10; position:relative; }
     
     .screen { 
       flex:1; 
@@ -18,7 +25,7 @@
       overflow-x:hidden;
       padding:12px; 
       position: relative;
-      background: #e8f4f8;
+      background: linear-gradient(180deg, #E3F2FD 0%, #F0F7FF 50%, #E0F7FA 100%);
     }
     
     /* ENHANCED WATER & BREEZE EFFECTS */
@@ -30,18 +37,18 @@
       right: 0;
       bottom: 0;
       background: 
-        linear-gradient(180deg, rgba(100, 200, 255, 0.3) 0%, rgba(150, 220, 240, 0.2) 40%, rgba(200, 240, 224, 0.3) 100%),
-        repeating-linear-gradient(90deg, transparent 0px, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px),
-        repeating-linear-gradient(45deg, transparent 0px, transparent 15px, rgba(135, 206, 250, 0.1) 15px, rgba(135, 206, 250, 0.1) 30px);
-      animation: waterFlow 20s linear infinite;
+        linear-gradient(180deg, rgba(0, 212, 255, 0.25) 0%, rgba(0, 255, 136, 0.15) 40%, rgba(100, 220, 255, 0.25) 100%),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 25px, rgba(255,255,255,0.08) 25px, rgba(255,255,255,0.08) 50px),
+        repeating-linear-gradient(45deg, transparent 0px, transparent 20px, rgba(0, 212, 255, 0.12) 20px, rgba(0, 212, 255, 0.12) 40px);
+      animation: waterFlow 12s linear infinite;
       z-index: -2;
       pointer-events: none;
     }
     
     @keyframes waterFlow {
-      0% { transform: translateY(-20%) rotate(0deg); opacity: 0.5; }
-      50% { opacity: 0.7; }
-      100% { transform: translateY(80%) rotate(5deg); opacity: 0.4; }
+      0% { transform: translateY(-30%) rotate(-5deg) scaleY(1); opacity: 0.6; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(60%) rotate(5deg) scaleY(1.1); opacity: 0.5; }
     }
     
     .screen::after {
@@ -52,102 +59,538 @@
       right: 0;
       bottom: 0;
       background: 
-        radial-gradient(ellipse 250% 180% at 50% 20%, rgba(200, 240, 255, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse 300% 120% at 50% 80%, rgba(100, 200, 255, 0.15) 0%, transparent 60%);
-      animation: breeze 25s ease-in-out infinite;
+        radial-gradient(ellipse 280% 200% at 50% 15%, rgba(0, 212, 255, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 350% 150% at 50% 85%, rgba(0, 255, 136, 0.2) 0%, transparent 65%);
+      animation: breeze 18s ease-in-out infinite;
       z-index: -1;
       pointer-events: none;
     }
     
     @keyframes breeze {
-      0%,100% { opacity: 0.4; transform: scale(1) translateX(0); }
-      25% { opacity: 0.6; transform: scale(1.1) translateX(-10px); }
-      50% { opacity: 0.35; transform: scale(1) translateX(0); }
-      75% { opacity: 0.55; transform: scale(1.08) translateX(10px); }
+      0%,100% { opacity: 0.3; transform: scale(1) translateX(0) translateY(0); }
+      25% { opacity: 0.55; transform: scale(1.12) translateX(-12px) translateY(5px); }
+      50% { opacity: 0.25; transform: scale(0.95) translateX(0) translateY(0); }
+      75% { opacity: 0.50; transform: scale(1.08) translateX(12px) translateY(-5px); }
     }
     
     .content { position: relative; z-index: 1; }
-    .card { background:rgba(255, 255, 255, 0.96); border-radius:18px; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.08); padding:16px; border:1px solid rgba(255,107,0,0.1); }
+    .card { background:rgba(255, 255, 255, 0.97); border-radius:20px; margin:14px 0; box-shadow:0 6px 20px rgba(0,0,0,0.09); padding:16px; border:1px solid rgba(0, 212, 255, 0.15); }
     
-    .btn { background:var(--primary); color:white; border:none; padding:14px; border-radius:12px; width:100%; font-weight:bold; margin:8px 0; cursor:pointer; transition:all 0.3s ease; font-size:15px; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 107, 0, 0.35); background:#e55c00; }
+    .btn { 
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+      color:white; 
+      border:none; 
+      padding:14px; 
+      border-radius:14px; 
+      width:100%; 
+      font-weight:bold; 
+      margin:8px 0; 
+      cursor:pointer; 
+      transition:all 0.3s ease;
+      font-size:15px;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.25);
+    }
+    .btn:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4);
+    }
     
-    .btn-small { background:#333; color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; border:none; transition:all 0.2s; display:inline-block; }
-    .btn-small:hover { background:#555; transform: scale(1.05); }
+    .btn-small { 
+      background:linear-gradient(135deg, #333 0%, #555 100%);
+      color:white; 
+      padding:7px 13px; 
+      border-radius:22px; 
+      font-size:12px; 
+      cursor:pointer; 
+      border:none; 
+      transition:all 0.25s;
+      display:inline-block;
+    }
+    .btn-small:hover { 
+      background:linear-gradient(135deg, #555 0%, #777 100%);
+      transform: scale(1.08);
+    }
     
-    .header-row { display:flex; justify-content:space-between; align-items:center; margin:18px 0 14px; padding:0 2px; }
-    .header-row h3 { margin:0; color:#1a3c5e; font-size:18px; font-weight:700; }
+    .header-row { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      margin:18px 0 14px; 
+      padding:0 2px;
+    }
+    .header-row h3 { 
+      margin:0; 
+      color:var(--dark); 
+      font-size:19px;
+      font-weight:800;
+      background: linear-gradient(135deg, #FF6B00 0%, #00D4FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+    .grid { 
+      display:grid; 
+      grid-template-columns:1fr 1fr; 
+      gap:12px; 
+      margin-bottom:16px;
+    }
     
-    .item { background:white; border-radius:18px; overflow:hidden; box-shadow:0 3px 12px rgba(0,0,0,0.1); cursor:pointer; transition:all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); border:2px solid transparent; position:relative; }
-    .item:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 12px 28px rgba(0,0,0,0.18); border-color:#FF6B00; }
+    .item { 
+      background:white; 
+      border-radius:20px; 
+      overflow:hidden; 
+      box-shadow:0 4px 15px rgba(0,0,0,0.1); 
+      cursor:pointer; 
+      transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border:2px solid transparent;
+      position:relative;
+    }
+    .item:hover { 
+      transform:translateY(-10px) scale(1.03);
+      box-shadow:0 14px 35px rgba(0,0,0,0.2);
+      border-color:#00D4FF;
+    }
     
-    .item img { width:100%; height:140px; object-fit:cover; display:block; transition:transform 0.4s ease; }
-    .item:hover img { transform: scale(1.08); }
+    .item img { 
+      width:100%; 
+      height:140px; 
+      object-fit:cover;
+      display:block;
+      transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .item:hover img {
+      transform: scale(1.12) rotate(1deg);
+    }
     
-    .item-text { padding:12px; background:rgba(255,255,255,0.98); }
-    .item-title { font-weight:700; color:#1a3c5e; font-size:14px; margin:0 0 4px 0; }
-    .item-desc { font-size:12px; color:#777; margin:3px 0; line-height:1.4; }
-    .item-price { color:var(--primary); font-weight:700; font-size:15px; margin-top:4px; }
+    .item-text { 
+      padding:12px; 
+      background:rgba(255,255,255,0.99);
+    }
+    .item-title { 
+      font-weight:800; 
+      color:var(--dark); 
+      font-size:14px;
+      margin:0 0 4px 0;
+    }
+    .item-desc { 
+      font-size:12px; 
+      color:#777; 
+      margin:3px 0;
+      line-height:1.4;
+    }
+    .item-price { 
+      color:var(--primary); 
+      font-weight:800; 
+      font-size:16px;
+      margin-top:4px;
+    }
+    .item-distance {
+      font-size:11px;
+      color:#00D4FF;
+      font-weight:600;
+      margin-top:2px;
+    }
     
-    .nav { display:flex; justify-content:space-around; background:white; border-top:2px solid #f0f0f0; padding:10px 0; position:sticky; bottom:0; z-index:100; }
-    .nav button { background:none; border:none; font-size:26px; cursor:pointer; padding:6px 12px; transition:all 0.2s; border-radius:8px; }
-    .nav button:hover { transform:scale(1.2); background:rgba(255,107,0,0.1); }
+    .nav { 
+      display:flex; 
+      justify-content:space-around; 
+      background:linear-gradient(180deg, white 0%, #F8FBFF 100%);
+      border-top:3px solid rgba(0, 212, 255, 0.2);
+      padding:10px 0; 
+      position:sticky; 
+      bottom:0; 
+      z-index:100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    .nav button { 
+      background:none; 
+      border:none; 
+      font-size:26px; 
+      cursor:pointer; 
+      padding:6px 12px; 
+      transition:all 0.25s;
+      border-radius:10px;
+    }
+    .nav button:hover { 
+      transform:scale(1.25) rotate(5deg);
+      background:linear-gradient(135deg, rgba(255,107,0,0.15), rgba(0,212,255,0.15));
+    }
     
-    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000; }
-    .modal-content { background:white; width:90%; max-width:340px; border-radius:20px; padding:24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .modal { 
+      display:none; 
+      position:fixed; 
+      top:0; 
+      left:0; 
+      width:100%; 
+      height:100%; 
+      background:rgba(0,0,0,0.75); 
+      align-items:center; 
+      justify-content:center; 
+      z-index:1000;
+      backdrop-filter: blur(3px);
+    }
+    .modal-content { 
+      background:linear-gradient(180deg, white 0%, #F5FBFF 100%);
+      width:90%; 
+      max-width:340px; 
+      border-radius:24px; 
+      padding:24px; 
+      text-align:center;
+      box-shadow:0 25px 70px rgba(0,0,0,0.35);
+      border:2px solid rgba(0, 212, 255, 0.2);
+    }
     
     .page { display:none; }
     
-    .view-toggle { display:flex; gap:8px; margin-bottom:16px; }
-    .view-toggle button { flex:1; padding:10px; font-size:13px; border-radius:10px; border:2px solid #ddd; transition:all 0.2s; font-weight:600; }
+    .view-toggle { 
+      display:flex; 
+      gap:8px; 
+      margin-bottom:16px;
+    }
+    .view-toggle button { 
+      flex:1; 
+      padding:11px; 
+      font-size:13px;
+      border-radius:12px;
+      border:2.5px solid #ddd;
+      transition:all 0.25s;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .view-toggle button.active {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+      color: white;
+      border-color: #FF6B00;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    }
     
-    h1 { margin:16px 0 8px; color:#1a3c5e; text-align:center; font-size:28px; }
-    h2 { color:#1a3c5e; margin:12px 0; font-size:20px; }
+    #map-view {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: 18px;
+    }
+    
+    .map-marker {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+      border: 3px solid white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      transition: all 0.2s;
+    }
+    
+    .map-marker:hover {
+      transform: scale(1.15);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+    }
+    
+    .price-badge {
+      background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    
+    h1 { margin:16px 0 8px; color:var(--dark); text-align:center; font-size:29px; font-weight:800; }
+    h2 { color:var(--dark); margin:12px 0; font-size:21px; font-weight:800; }
     p { color:#666; text-align:center; }
   </style>
 </head>
 <body>
 
 <div class="phone">
-  <div class="topbar">🌊 Nestra <span style="font-size:13px;opacity:0.85;">📍 Githurai 45</span></div>
+  <div class="topbar">🌊 Nestra <span style="font-size:13px;opacity:0.85;">📍 Githurai 45 • GPS Maps</span></div>
   
   <div class="screen">
+    <!-- HOME PAGE -->
     <div id="start" class="page" style="display:block;">
-      <h1>Welcome Home</h1>
-      <p style="margin-bottom:14px;">Find your cool, breezy space 🌬️</p>
-      <div class="card" style="text-align:center;"><strong style="font-size:16px;">📍 Githurai 45, Nairobi</strong><br><br><button class="btn" onclick="navigate('all-listings')">Explore All Listings</button></div>
-      <div class="header-row"><h3>Popular Houses</h3><button class="btn-small" onclick="navigate('all-listings')">View All →</button></div>
+      <h1>🏠 Welcome Home</h1>
+      <p style="margin-bottom:14px;">Find your perfect cool breeze space 🌬️✨</p>
+      
+      <div class="card" style="text-align:center;">
+        <strong style="font-size:16px;">📍 Githurai 45, Nairobi</strong><br>
+        <small style="color:#666;">Discover 8+ premium locations</small><br><br>
+        <button class="btn" onclick="navigate('all-listings')">Explore All Listings</button>
+      </div>
+
+      <div class="header-row">
+        <h3>🏆 Popular Houses</h3>
+        <button class="btn-small" onclick="navigate('all-listings')">View All 8 →</button>
+      </div>
       <div class="grid" id="start-listings"></div>
-      <h3 style="color:#1a3c5e; margin-top:18px; margin-bottom:12px;">Second-Hand Goods</h3>
+
+      <h3 style="color:var(--dark); margin-top:18px; margin-bottom:12px; font-weight:800;">♻️ Second-Hand Goods</h3>
       <div class="grid">
-        <div class="item" onclick="payNow(1200, 'Gas cylinder – same building')"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=200&h=140&fit=crop" alt="Gas" onerror="this.src='https://picsum.photos/id/201/200/140'"><div class="item-text"><div class="item-title">Gas Cylinder</div><div class="item-desc">Room 15 • Same building</div><div class="item-price">KSh 1,200</div></div></div>
-        <div class="item" onclick="payNow(800, 'Mattress – same building')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=140&fit=crop" alt="Mattress" onerror="this.src='https://picsum.photos/id/251/200/140'"><div class="item-text"><div class="item-title">Good Mattress</div><div class="item-desc">Room 8 • Clean condition</div><div class="item-price">KSh 800</div></div></div>
+        <div class="item" onclick="payNow(1200, 'Gas cylinder – same building')">
+          <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=200&h=140&fit=crop" alt="Gas" onerror="this.src='https://picsum.photos/id/201/200/140'">
+          <div class="item-text">
+            <div class="item-title">Gas Cylinder</div>
+            <div class="item-desc">Room 15 • Same building</div>
+            <div class="price-badge">KSh 1,200</div>
+          </div>
+        </div>
+        <div class="item" onclick="payNow(800, 'Mattress – same building')">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=140&fit=crop" alt="Mattress" onerror="this.src='https://picsum.photos/id/251/200/140'">
+          <div class="item-text">
+            <div class="item-title">Good Mattress</div>
+            <div class="item-desc">Room 8 • Clean condition</div>
+            <div class="price-badge">KSh 800</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="all-listings" class="page"><button class="btn-small" onclick="navigate('start')" style="margin-bottom:12px;">← Back</button><h2>All Listings in Githurai 45</h2><div class="view-toggle"><button id="grid-btn" onclick="toggleView('grid')" style="background:#FF6B00; color:white; border-color:#FF6B00;">📋 Grid</button><button id="map-btn" onclick="toggleView('map')" style="background:white; color:#333;">🗺️ Map</button></div><div id="grid-view" class="grid"></div><div id="map-view" style="display:none; text-align:center; padding:20px;"><div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:16px; height:300px; display:flex; align-items:center; justify-content:center; color:white; font-size:16px; font-weight:bold;">📍 Map View Coming Soon</div></div></div>
-    <div id="listing-detail" class="page"><button class="btn-small" onclick="navigate('all-listings')" style="margin-bottom:12px;">← Back</button><div class="card"><img id="detail-img" src="" style="width:100%; border-radius:14px; margin-bottom:14px; height:200px; object-fit:cover;"><h2 id="detail-title" style="margin:12px 0;"></h2><p id="detail-desc" style="color:#666; margin:8px 0; line-height:1.6; text-align:left;"></p><h3 id="detail-price" style="color:#FF6B00; margin:14px 0; font-size:20px;"></h3><button class="btn" onclick="contactLandlord()">📞 Contact Landlord</button></div></div>
+
+    <!-- ALL LISTINGS PAGE -->
+    <div id="all-listings" class="page">
+      <button class="btn-small" onclick="navigate('start')" style="margin-bottom:12px;">← Back</button>
+      <h2>🏘️ All Listings (8)</h2>
+      
+      <div class="view-toggle">
+        <button id="grid-btn" class="active" onclick="toggleView('grid')">📋 Grid View</button>
+        <button id="map-btn" onclick="toggleView('map')">🗺️ Map View</button>
+      </div>
+      
+      <div id="grid-view" class="grid"></div>
+      
+      <div id="map-view" style="display:none;">
+        <div id="map-container" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:18px; height:300px; display:flex; align-items:center; justify-content:center; color:white; font-size:14px; font-weight:bold; position:relative; overflow:hidden;" id="map"></div>
+        <div style="margin-top:12px; background:white; padding:12px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+          <p style="text-align:left; margin:0; color:#666; font-size:12px;"><strong>📍 All 8 listings displayed above</strong><br>Tap any marker to view property details</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTING DETAILS PAGE -->
+    <div id="listing-detail" class="page">
+      <button class="btn-small" onclick="navigate('all-listings')" style="margin-bottom:12px;">← Back</button>
+      <div class="card">
+        <img id="detail-img" src="" style="width:100%; border-radius:16px; margin-bottom:14px; height:200px; object-fit:cover;">
+        <h2 id="detail-title" style="margin:12px 0;"></h2>
+        <p id="detail-desc" style="color:#666; margin:8px 0; line-height:1.7; text-align:left;"></p>
+        <div style="display:flex; gap:8px; margin:12px 0;">
+          <div style="background:rgba(0,212,255,0.15); padding:8px 12px; border-radius:10px; flex:1;"><small style="color:#00D4FF; font-weight:700;">📍 <span id="detail-area"></span></small></div>
+          <div id="detail-price" style="background:linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,140,66,0.15)); padding:8px 12px; border-radius:10px; color:var(--primary); font-weight:800;"></div>
+        </div>
+        <button class="btn" onclick="contactLandlord()">📞 Contact Landlord</button>
+        <button class="btn-small" onclick="alert('Scheduling feature coming soon')" style="width:100%; margin-top:8px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><strong>📅 Schedule Tour</strong></button>
+      </div>
+    </div>
+
   </div>
-  
-  <div class="nav"><button onclick="navigate('start')">🏠</button><button onclick="navigate('all-listings')">🔍</button><button onclick="alert('Map feature coming soon')">🗺️</button><button onclick="alert('Profile coming soon')">👤</button></div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="nav">
+    <button onclick="navigate('start')" title="Home">🏠</button>
+    <button onclick="navigate('all-listings')" title="Browse">🔍</button>
+    <button onclick="alert('Saved properties coming soon')" title="Favorites">❤️</button>
+    <button onclick="alert('Profile & settings coming soon')" title="Profile">👤</button>
+  </div>
 </div>
 
-<div id="payment-modal" class="modal"><div class="modal-content"><h3 style="margin-top:0;">💳 M-Pesa Payment</h3><p id="modal-title" style="font-size:18px; margin:12px 0;">Paying <span id="modal-amount" style="color:#FF6B00; font-weight:bold;"></span></p><p id="modal-desc" style="color:#666; margin:8px 0;"></p><input type="text" id="phone" placeholder="Enter phone number" value="0712345678" style="width:100%; padding:12px; margin:12px 0; border-radius:10px; border:2px solid #ddd; font-size:14px;"><button class="btn" onclick="confirmPayment()" style="margin:10px 0;">Send to M-Pesa</button><button class="btn-small" onclick="closeModal()" style="background:#999; width:100%; padding:10px; margin-top:8px;">Cancel</button></div></div>
+<!-- PAYMENT MODAL -->
+<div id="payment-modal" class="modal">
+  <div class="modal-content">
+    <h3 style="margin-top:0; background: linear-gradient(135deg, #FF6B00 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">💳 M-Pesa Payment</h3>
+    <p id="modal-title" style="font-size:18px; margin:12px 0;">Paying <span id="modal-amount" style="color:#FF6B00; font-weight:bold;"></span></p>
+    <p id="modal-desc" style="color:#666; margin:8px 0;"></p>
+    <input type="text" id="phone" placeholder="Enter phone number" value="0712345678" style="width:100%; padding:12px; margin:12px 0; border-radius:12px; border:2px solid #ddd; font-size:14px; transition:0.2s;" onfocus="this.style.borderColor='#FF6B00';" onblur="this.style.borderColor='#ddd';">
+    <button class="btn" onclick="confirmPayment()" style="margin:10px 0;">Send to M-Pesa</button>
+    <button class="btn-small" onclick="closeModal()" style="background:linear-gradient(135deg, #999 0%, #bbb 100%); width:100%; padding:10px; margin-top:8px;"><strong>Cancel</strong></button>
+  </div>
+</div>
 
 <script src="listings.js"></script>
-<script src="app.js"></script>
 <script>
-function navigate(pageId) { document.querySelectorAll('.page').forEach(page => page.style.display = 'none'); document.getElementById(pageId).style.display = 'block'; }
-function renderStartListings() { const c=document.getElementById('start-listings'); if(!listings)return; const s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=140&fit=crop']; c.innerHTML=listings.map((i,x)=>`<div class="item" onclick="showListing(${x})"><img src="${s[x%s.length]}" alt="${i.title}" onerror="this.src='https://picsum.photos/id/${1015+x}/200/140'"><div class="item-text"><div class="item-title">${i.title}</div><div class="item-desc">${i.desc}</div><div class="item-price">${i.price}</div></div></div>`).join(''); }
-function renderAllListings() { const c=document.getElementById('grid-view'); if(!listings)return; const s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=140&fit=crop']; c.innerHTML=listings.map((i,x)=>`<div class="item" onclick="showListing(${x})"><img src="${s[x%s.length]}" alt="${i.title}" onerror="this.src='https://picsum.photos/id/${1015+x}/200/140'"><div class="item-text"><div class="item-title">${i.title}</div><div class="item-desc">${i.desc}</div><div class="item-price">${i.price}</div></div></div>`).join(''); }
-function toggleView(v) { const g=document.getElementById('grid-view'),m=document.getElementById('map-view'),gb=document.getElementById('grid-btn'),mb=document.getElementById('map-btn'); if(v==='grid'){ g.style.display='grid'; m.style.display='none'; gb.style.background='#FF6B00'; gb.style.color='white'; mb.style.background='white'; mb.style.color='#333'; } else { g.style.display='none'; m.style.display='block'; gb.style.background='white'; gb.style.color='#333'; mb.style.background='#FF6B00'; mb.style.color='white'; } }
-function showListing(x) { if(!listings||!listings[x])return; const i=listings[x],s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=200&fit=crop']; document.getElementById('detail-img').src=s[x%s.length]; document.getElementById('detail-title').innerText=i.title; document.getElementById('detail-desc').innerText=i.desc; document.getElementById('detail-price').innerText=i.price; navigate('listing-detail'); }
-function contactLandlord() { alert('📞 Landlord contact info coming soon!'); }
-function payNow(a,d) { document.getElementById('modal-amount').innerText=`KSh ${a}`; document.getElementById('modal-desc').innerHTML=d; document.getElementById('payment-modal').style.display='flex'; }
-function confirmPayment() { const p=document.getElementById('phone').value; if(!p){ alert('Please enter phone number'); return; } closeModal(); setTimeout(()=>alert(`✅ M-Pesa Payment Initiated!\nPhone: ${p}\n\nCheck your phone for the STK prompt.`),300); }
-function closeModal() { document.getElementById('payment-modal').style.display='none'; }
-window.onload=()=>{ renderStartListings(); navigate('start'); };
+function navigate(pageId) { 
+  document.querySelectorAll('.page').forEach(page => page.style.display = 'none'); 
+  document.getElementById(pageId).style.display = 'block'; 
+}
+
+function getImageUrl(idx) {
+  const images = [
+    'https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=140&fit=crop',
+    'https://images.unsplash.com/photo-1542228157153-a0b5f9f79531?w=400&h=140&fit=crop'
+  ];
+  return images[idx % images.length];
+}
+
+function renderStartListings() {
+  const container = document.getElementById('start-listings');
+  if (!listings) return;
+  container.innerHTML = listings.slice(0, 4).map((item, idx) => `
+    <div class="item" onclick="showListing(${idx})">
+      <img src="${getImageUrl(idx)}" alt="${item.title}" onerror="this.src='https://picsum.photos/id/${1015 + idx}/200/140'">
+      <div class="item-text">
+        <div class="item-title">${item.title}</div>
+        <div class="item-desc">${item.desc}</div>
+        <div style="display:flex; justify-content:space-between; margin-top:6px;">
+          <span class="item-distance">📍 ${item.area}</span>
+          <span class="item-price">${item.price}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAllListings() {
+  const container = document.getElementById('grid-view');
+  if (!listings) return;
+  container.innerHTML = listings.map((item, idx) => `
+    <div class="item" onclick="showListing(${idx})">
+      <img src="${getImageUrl(idx)}" alt="${item.title}" onerror="this.src='https://picsum.photos/id/${1015 + idx}/200/140'">
+      <div class="item-text">
+        <div class="item-title">${item.title}</div>
+        <div class="item-desc">${item.desc}</div>
+        <div style="display:flex; justify-content:space-between; margin-top:6px;">
+          <span class="item-distance">📍 ${item.area}</span>
+          <span class="item-price">${item.price}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMapView() {
+  const mapContainer = document.getElementById('map');
+  if (!listings) return;
+  
+  mapContainer.innerHTML = '';
+  mapContainer.style.background = 'linear-gradient(135deg, #E3F2FD 0%, #E0F7FA 100%)';
+  mapContainer.style.position = 'relative';
+  
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('height', '300');
+  svg.setAttribute('viewBox', '0 0 300 300');
+  
+  // Simple grid background
+  svg.innerHTML = `
+    <defs>
+      <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+        <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#00D4FF" stroke-width="0.5" opacity="0.3"/>
+      </pattern>
+    </defs>
+    <rect width="300" height="300" fill="url(#grid)" />
+  `;
+  
+  listings.forEach((listing, idx) => {
+    const x = 50 + (idx % 4) * 60;
+    const y = 50 + Math.floor(idx / 4) * 120;
+    
+    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    marker.setAttribute('cx', x);
+    marker.setAttribute('cy', y);
+    marker.setAttribute('r', '12');
+    marker.setAttribute('fill', '#FF6B00');
+    marker.setAttribute('stroke', 'white');
+    marker.setAttribute('stroke-width', '2');
+    marker.style.cursor = 'pointer';
+    marker.onclick = () => showListing(idx);
+    marker.title = listing.title;
+    
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', x);
+    text.setAttribute('y', y + 4);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', 'white');
+    text.setAttribute('font-weight', 'bold');
+    text.setAttribute('font-size', '8');
+    text.textContent = (idx + 1);
+    text.style.cursor = 'pointer';
+    text.onclick = () => showListing(idx);
+    
+    svg.appendChild(marker);
+    svg.appendChild(text);
+  });
+  
+  mapContainer.appendChild(svg);
+}
+
+function toggleView(view) {
+  const gridView = document.getElementById('grid-view');
+  const mapView = document.getElementById('map-view');
+  const gridBtn = document.getElementById('grid-btn');
+  const mapBtn = document.getElementById('map-btn');
+  
+  if (view === 'grid') {
+    gridView.style.display = 'grid';
+    mapView.style.display = 'none';
+    gridBtn.classList.add('active');
+    mapBtn.classList.remove('active');
+  } else {
+    gridView.style.display = 'none';
+    mapView.style.display = 'block';
+    gridBtn.classList.remove('active');
+    mapBtn.classList.add('active');
+    renderMapView();
+  }
+}
+
+function showListing(idx) {
+  if (!listings || !listings[idx]) return;
+  const item = listings[idx];
+  
+  document.getElementById('detail-img').src = getImageUrl(idx).replace('140&fit=crop', '200&fit=crop');
+  document.getElementById('detail-title').innerText = item.title;
+  document.getElementById('detail-desc').innerText = item.desc;
+  document.getElementById('detail-area').innerText = item.area;
+  document.getElementById('detail-price').innerText = item.price;
+  navigate('listing-detail');
+}
+
+function contactLandlord() {
+  alert('📞 Landlord contact coming soon!\nFeature: WhatsApp, Call, Email');
+}
+
+function payNow(amount, description) {
+  document.getElementById('modal-amount').innerText = `KSh ${amount}`;
+  document.getElementById('modal-desc').innerHTML = description;
+  document.getElementById('payment-modal').style.display = 'flex';
+}
+
+function confirmPayment() {
+  const phone = document.getElementById('phone').value;
+  if (!phone) {
+    alert('Please enter phone number');
+    return;
+  }
+  closeModal();
+  setTimeout(() => alert(`✅ M-Pesa Payment Initiated!\nPhone: ${phone}\n\n📱 Check your phone for STK prompt`), 300);
+}
+
+function closeModal() {
+  document.getElementById('payment-modal').style.display = 'none';
+}
+
+window.onload = () => {
+  renderStartListings();
+  renderAllListings();
+  navigate('start');
+};
 </script>
 </body>
 </html>
