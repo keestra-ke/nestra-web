@@ -1,58 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nestra • Vacant Kenya</title>
-
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Nestra Web</title>
 </head>
-
 <body>
-
-<div class="app">
-
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <h1>NESTRA</h1>
-    <p>Vacant Kenya • Live Housing Map</p>
-  </header>
-
-  <!-- NAV LOCATION -->
-  <div class="location-bar">
-    📍 Githurai 45 • Nairobi
-  </div>
-
-  <!-- SEARCH -->
-  <section class="search">
-    <input id="searchInput" placeholder="Search estate, area, price...">
-    <button onclick="searchListings()">Search</button>
-  </section>
-
-  <!-- MAIN FEED -->
-  <section id="feed" class="feed"></section>
-
-  <!-- MAP PREVIEW -->
-  <section class="map">
-    <h3>Live Map Preview</h3>
-    <div class="map-box">
-      📍 Map pins will appear here (Phase 2 upgrade)
-    </div>
-  </section>
-
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
-  <div class="modal-content">
-    <h2 id="modalTitle"></h2>
-    <p id="modalDesc"></p>
-    <button onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<script src="data/listings.js"></script>
-<script src="app.js"></script>
-
+    <script src="listings.js"></script>
 </body>
 </html>
