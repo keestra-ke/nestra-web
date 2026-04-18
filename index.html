@@ -1,67 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Listings</title>
-    <style>
-        body {
-            background: url('path/to/water-animation.gif');
-            background-size: cover;
-            animation: ocean-breeze 10s infinite alternate;
-        }
-
-        @keyframes ocean-breeze {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        .listing-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .listing-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .view-all {
-            float: right;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nestra • GPS Housing Platform v2.0</title>
+  <style>
+    :root { --primary: #FF6B00; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Segoe UI',sans-serif; background:#f0f0f0; }
+    
+    .phone { max-width:380px; margin:20px auto; background:white; border:14px solid #111; border-radius:42px; overflow:hidden; height:680px; display:flex; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.4); }
+    .topbar { background:var(--primary); color:white; padding:12px; text-align:center; font-weight:bold; z-index:10; position:relative; }
+    
+    .screen { 
+      flex:1; 
+      overflow-y:auto; 
+      overflow-x:hidden;
+      padding:12px; 
+      position: relative;
+      background: #e8f4f8;
+    }
+    
+    /* ENHANCED WATER & BREEZE EFFECTS */
+    .screen::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(180deg, rgba(100, 200, 255, 0.3) 0%, rgba(150, 220, 240, 0.2) 40%, rgba(200, 240, 224, 0.3) 100%),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px),
+        repeating-linear-gradient(45deg, transparent 0px, transparent 15px, rgba(135, 206, 250, 0.1) 15px, rgba(135, 206, 250, 0.1) 30px);
+      animation: waterFlow 20s linear infinite;
+      z-index: -2;
+      pointer-events: none;
+    }
+    
+    @keyframes waterFlow {
+      0% { transform: translateY(-20%) rotate(0deg); opacity: 0.5; }
+      50% { opacity: 0.7; }
+      100% { transform: translateY(80%) rotate(5deg); opacity: 0.4; }
+    }
+    
+    .screen::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse 250% 180% at 50% 20%, rgba(200, 240, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse 300% 120% at 50% 80%, rgba(100, 200, 255, 0.15) 0%, transparent 60%);
+      animation: breeze 25s ease-in-out infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    @keyframes breeze {
+      0%,100% { opacity: 0.4; transform: scale(1) translateX(0); }
+      25% { opacity: 0.6; transform: scale(1.1) translateX(-10px); }
+      50% { opacity: 0.35; transform: scale(1) translateX(0); }
+      75% { opacity: 0.55; transform: scale(1.08) translateX(10px); }
+    }
+    
+    .content { position: relative; z-index: 1; }
+    .card { background:rgba(255, 255, 255, 0.96); border-radius:18px; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.08); padding:16px; border:1px solid rgba(255,107,0,0.1); }
+    
+    .btn { background:var(--primary); color:white; border:none; padding:14px; border-radius:12px; width:100%; font-weight:bold; margin:8px 0; cursor:pointer; transition:all 0.3s ease; font-size:15px; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 107, 0, 0.35); background:#e55c00; }
+    
+    .btn-small { background:#333; color:white; padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; border:none; transition:all 0.2s; display:inline-block; }
+    .btn-small:hover { background:#555; transform: scale(1.05); }
+    
+    .header-row { display:flex; justify-content:space-between; align-items:center; margin:18px 0 14px; padding:0 2px; }
+    .header-row h3 { margin:0; color:#1a3c5e; font-size:18px; font-weight:700; }
+    
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+    
+    .item { background:white; border-radius:18px; overflow:hidden; box-shadow:0 3px 12px rgba(0,0,0,0.1); cursor:pointer; transition:all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); border:2px solid transparent; position:relative; }
+    .item:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 12px 28px rgba(0,0,0,0.18); border-color:#FF6B00; }
+    
+    .item img { width:100%; height:140px; object-fit:cover; display:block; transition:transform 0.4s ease; }
+    .item:hover img { transform: scale(1.08); }
+    
+    .item-text { padding:12px; background:rgba(255,255,255,0.98); }
+    .item-title { font-weight:700; color:#1a3c5e; font-size:14px; margin:0 0 4px 0; }
+    .item-desc { font-size:12px; color:#777; margin:3px 0; line-height:1.4; }
+    .item-price { color:var(--primary); font-weight:700; font-size:15px; margin-top:4px; }
+    
+    .nav { display:flex; justify-content:space-around; background:white; border-top:2px solid #f0f0f0; padding:10px 0; position:sticky; bottom:0; z-index:100; }
+    .nav button { background:none; border:none; font-size:26px; cursor:pointer; padding:6px 12px; transition:all 0.2s; border-radius:8px; }
+    .nav button:hover { transform:scale(1.2); background:rgba(255,107,0,0.1); }
+    
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000; }
+    .modal-content { background:white; width:90%; max-width:340px; border-radius:20px; padding:24px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    
+    .page { display:none; }
+    
+    .view-toggle { display:flex; gap:8px; margin-bottom:16px; }
+    .view-toggle button { flex:1; padding:10px; font-size:13px; border-radius:10px; border:2px solid #ddd; transition:all 0.2s; font-weight:600; }
+    
+    h1 { margin:16px 0 8px; color:#1a3c5e; text-align:center; font-size:28px; }
+    h2 { color:#1a3c5e; margin:12px 0; font-size:20px; }
+    p { color:#666; text-align:center; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Popular Houses <button class="view-all">View All</button></h1>
-    </header>
-    <main>
-        <section class="listings">
-            <div class="listing-card">
-                <img src="https://source.unsplash.com/random/1" alt="Sunrise Block B">
-                <h2>Sunrise Block B</h2>
-            </div>
-            <div class="listing-card">
-                <img src="https://source.unsplash.com/random/2" alt="Blessed Hands">
-                <h2>Blessed Hands</h2>
-            </div>
-            <div class="listing-card">
-                <img src="https://source.unsplash.com/random/3" alt="Kayole Junction">
-                <h2>Kayole Junction</h2>
-            </div>
-            <div class="listing-card">
-                <img src="https://source.unsplash.com/random/4" alt="Baba Dogo Heights">
-                <h2>Baba Dogo Heights</h2>
-            </div>
-        </section>
-        <div class="view-toggle">
-            <button>Grid View</button>
-            <button>Map View</button>
-        </div>
-    </main>
+
+<div class="phone">
+  <div class="topbar">🌊 Nestra <span style="font-size:13px;opacity:0.85;">📍 Githurai 45</span></div>
+  
+  <div class="screen">
+    <div id="start" class="page" style="display:block;">
+      <h1>Welcome Home</h1>
+      <p style="margin-bottom:14px;">Find your cool, breezy space 🌬️</p>
+      <div class="card" style="text-align:center;"><strong style="font-size:16px;">📍 Githurai 45, Nairobi</strong><br><br><button class="btn" onclick="navigate('all-listings')">Explore All Listings</button></div>
+      <div class="header-row"><h3>Popular Houses</h3><button class="btn-small" onclick="navigate('all-listings')">View All →</button></div>
+      <div class="grid" id="start-listings"></div>
+      <h3 style="color:#1a3c5e; margin-top:18px; margin-bottom:12px;">Second-Hand Goods</h3>
+      <div class="grid">
+        <div class="item" onclick="payNow(1200, 'Gas cylinder – same building')"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=200&h=140&fit=crop" alt="Gas" onerror="this.src='https://picsum.photos/id/201/200/140'"><div class="item-text"><div class="item-title">Gas Cylinder</div><div class="item-desc">Room 15 • Same building</div><div class="item-price">KSh 1,200</div></div></div>
+        <div class="item" onclick="payNow(800, 'Mattress – same building')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=140&fit=crop" alt="Mattress" onerror="this.src='https://picsum.photos/id/251/200/140'"><div class="item-text"><div class="item-title">Good Mattress</div><div class="item-desc">Room 8 • Clean condition</div><div class="item-price">KSh 800</div></div></div>
+      </div>
+    </div>
+    <div id="all-listings" class="page"><button class="btn-small" onclick="navigate('start')" style="margin-bottom:12px;">← Back</button><h2>All Listings in Githurai 45</h2><div class="view-toggle"><button id="grid-btn" onclick="toggleView('grid')" style="background:#FF6B00; color:white; border-color:#FF6B00;">📋 Grid</button><button id="map-btn" onclick="toggleView('map')" style="background:white; color:#333;">🗺️ Map</button></div><div id="grid-view" class="grid"></div><div id="map-view" style="display:none; text-align:center; padding:20px;"><div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:16px; height:300px; display:flex; align-items:center; justify-content:center; color:white; font-size:16px; font-weight:bold;">📍 Map View Coming Soon</div></div></div>
+    <div id="listing-detail" class="page"><button class="btn-small" onclick="navigate('all-listings')" style="margin-bottom:12px;">← Back</button><div class="card"><img id="detail-img" src="" style="width:100%; border-radius:14px; margin-bottom:14px; height:200px; object-fit:cover;"><h2 id="detail-title" style="margin:12px 0;"></h2><p id="detail-desc" style="color:#666; margin:8px 0; line-height:1.6; text-align:left;"></p><h3 id="detail-price" style="color:#FF6B00; margin:14px 0; font-size:20px;"></h3><button class="btn" onclick="contactLandlord()">📞 Contact Landlord</button></div></div>
+  </div>
+  
+  <div class="nav"><button onclick="navigate('start')">🏠</button><button onclick="navigate('all-listings')">🔍</button><button onclick="alert('Map feature coming soon')">🗺️</button><button onclick="alert('Profile coming soon')">👤</button></div>
+</div>
+
+<div id="payment-modal" class="modal"><div class="modal-content"><h3 style="margin-top:0;">💳 M-Pesa Payment</h3><p id="modal-title" style="font-size:18px; margin:12px 0;">Paying <span id="modal-amount" style="color:#FF6B00; font-weight:bold;"></span></p><p id="modal-desc" style="color:#666; margin:8px 0;"></p><input type="text" id="phone" placeholder="Enter phone number" value="0712345678" style="width:100%; padding:12px; margin:12px 0; border-radius:10px; border:2px solid #ddd; font-size:14px;"><button class="btn" onclick="confirmPayment()" style="margin:10px 0;">Send to M-Pesa</button><button class="btn-small" onclick="closeModal()" style="background:#999; width:100%; padding:10px; margin-top:8px;">Cancel</button></div></div>
+
+<script src="listings.js"></script>
+<script src="app.js"></script>
+<script>
+function navigate(pageId) { document.querySelectorAll('.page').forEach(page => page.style.display = 'none'); document.getElementById(pageId).style.display = 'block'; }
+function renderStartListings() { const c=document.getElementById('start-listings'); if(!listings)return; const s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=140&fit=crop']; c.innerHTML=listings.map((i,x)=>`<div class="item" onclick="showListing(${x})"><img src="${s[x%s.length]}" alt="${i.title}" onerror="this.src='https://picsum.photos/id/${1015+x}/200/140'"><div class="item-text"><div class="item-title">${i.title}</div><div class="item-desc">${i.desc}</div><div class="item-price">${i.price}</div></div></div>`).join(''); }
+function renderAllListings() { const c=document.getElementById('grid-view'); if(!listings)return; const s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=140&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=140&fit=crop']; c.innerHTML=listings.map((i,x)=>`<div class="item" onclick="showListing(${x})"><img src="${s[x%s.length]}" alt="${i.title}" onerror="this.src='https://picsum.photos/id/${1015+x}/200/140'"><div class="item-text"><div class="item-title">${i.title}</div><div class="item-desc">${i.desc}</div><div class="item-price">${i.price}</div></div></div>`).join(''); }
+function toggleView(v) { const g=document.getElementById('grid-view'),m=document.getElementById('map-view'),gb=document.getElementById('grid-btn'),mb=document.getElementById('map-btn'); if(v==='grid'){ g.style.display='grid'; m.style.display='none'; gb.style.background='#FF6B00'; gb.style.color='white'; mb.style.background='white'; mb.style.color='#333'; } else { g.style.display='none'; m.style.display='block'; gb.style.background='white'; gb.style.color='#333'; mb.style.background='#FF6B00'; mb.style.color='white'; } }
+function showListing(x) { if(!listings||!listings[x])return; const i=listings[x],s=['https://images.unsplash.com/photo-1545324418-cc1a9f4ef888?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=200&fit=crop','https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=200&fit=crop']; document.getElementById('detail-img').src=s[x%s.length]; document.getElementById('detail-title').innerText=i.title; document.getElementById('detail-desc').innerText=i.desc; document.getElementById('detail-price').innerText=i.price; navigate('listing-detail'); }
+function contactLandlord() { alert('📞 Landlord contact info coming soon!'); }
+function payNow(a,d) { document.getElementById('modal-amount').innerText=`KSh ${a}`; document.getElementById('modal-desc').innerHTML=d; document.getElementById('payment-modal').style.display='flex'; }
+function confirmPayment() { const p=document.getElementById('phone').value; if(!p){ alert('Please enter phone number'); return; } closeModal(); setTimeout(()=>alert(`✅ M-Pesa Payment Initiated!\nPhone: ${p}\n\nCheck your phone for the STK prompt.`),300); }
+function closeModal() { document.getElementById('payment-modal').style.display='none'; }
+window.onload=()=>{ renderStartListings(); navigate('start'); };
+</script>
 </body>
 </html>
